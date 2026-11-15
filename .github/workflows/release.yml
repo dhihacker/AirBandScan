@@ -18,6 +18,9 @@ on:
 permissions:
   contents: read
 
+env:
+  BUILD_PLATFORMS: linux/amd64,linux/386,linux/arm64,linux/arm/v7
+
 jobs:
   # -------------------------------------------------------------------------
   # Linux + Raspberry Pi: built inside debian:bookworm (glibc 2.36, the base
@@ -78,7 +81,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v7
         with:
-          platforms: ${{ matrix.name }}
+          platforms: ${{ env.BUILD_PLATFORMS }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
