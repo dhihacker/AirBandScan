@@ -63,8 +63,10 @@ jobs:
         with:
           images: ${{ env.GHCR_IMAGE }}
           tags: |
+            type=ref,event=branch
+            type=ref,event=pr
             type=semver,pattern={{version}}
-            type=raw,value=${{ github.event.inputs.tags || 'latest' }},enable=${{ github.event_name == 'workflow_dispatch' }}
+            type=sha,prefix=sha-
 
       - name: Set up QEMU
         if: startsWith(matrix.platform, 'linux/arm')
